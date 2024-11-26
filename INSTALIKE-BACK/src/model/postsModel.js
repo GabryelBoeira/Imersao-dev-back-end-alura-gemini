@@ -1,3 +1,4 @@
+import { ObjectId } from 'mongodb';
 import conectarAoBanco from "../config/dbconfig.js";
 
 // Conecta ao banco de dados MongoDB usando a string de conexão fornecida
@@ -20,4 +21,10 @@ export async function createNovoPost(novoPost) {
     const db = conexao.db("imersao-instabytes");
     const colecao = db.collection("posts");
     return colecao.insertOne(novoPost);
+};
+
+export async function getPostPorId(id) {
+    const db = conexao.db("imersao-instabytes");
+    const colecao = db.collection("posts");
+    return colecao.findOne({ _id: ObjectId.createFromHexString(id)});
 };

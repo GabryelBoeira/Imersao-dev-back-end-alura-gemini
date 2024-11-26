@@ -1,5 +1,5 @@
 import fs from "fs";
-import { getTodosPosts, createNovoPost} from "../model/postsmodel.js";
+import { getTodosPosts, createNovoPost, getPostPorId} from "../model/postsmodel.js";
 
 export async function listarTodosPosts(req, res) {        
     // Chama a função para buscar todos os posts
@@ -37,4 +37,8 @@ export async function uploadImage(req, res) {
     }
 };
 
+export async function buscarPostById(req, res) {
+    const posts = await getPostPorId(req.params.id);
+    res.status(200).json(posts);
+};
 
