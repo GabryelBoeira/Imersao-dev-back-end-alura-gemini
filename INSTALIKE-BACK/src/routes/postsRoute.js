@@ -1,6 +1,7 @@
 import express from "express";
 import multer from "multer";
-import { buscarPostById, listarTodosPosts, postarNovoPost, uploadImage } from "../controller/postsController.js";
+import cors from "cors"
+import { buscarPostById, listarTodosPosts, postarNovoPost, uploadImage, atualizarNovoPost } from "../controller/postsController.js";
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -13,9 +14,17 @@ const storage = multer.diskStorage({
 
 const upload = multer({ dest: "./uploads" , storage});
 
+const corsOptions = {
+    origin: "http://localhost:8000",
+    optionsSuccessStatus: 200
+}
+
 const routes = (servidor) => {
     // Habilita o servidor a receber dados no formato JSON
     servidor.use(express.json());
+
+    //Habilita o cors para porta 8000
+    servidor.use(cors(corsOptions));
 
     // Rota raiz que retorna uma mensagem de teste
     servidor.get("/", (req, res) => {
@@ -34,7 +43,8 @@ const routes = (servidor) => {
     //Rota para salvar um novo post
     servidor.post("/upload", upload.single("imagem"), uploadImage);
 
-    //servidor.put("/posts/:id", upload.single("imagem"), uploadImage);
+    //Rota para atualizar um post
+    servidor.put("/upload/:id", atualizarNovoPost);
 
 };
 

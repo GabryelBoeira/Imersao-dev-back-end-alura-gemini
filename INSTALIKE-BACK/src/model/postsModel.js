@@ -28,3 +28,11 @@ export async function getPostPorId(id) {
     const colecao = db.collection("posts");
     return colecao.findOne({ _id: ObjectId.createFromHexString(id)});
 };
+
+export async function atualizarPost(id, post) {
+    const db = conexao.db("imersao-instabytes");
+    const colecao = db.collection("posts");
+
+
+    return colecao.updateOne({ _id: ObjectId.createFromHexString(id)}, {$set: post});
+};
